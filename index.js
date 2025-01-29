@@ -92,6 +92,14 @@ async function run() {
       }
     );
 
+    // ---------- Products APIS -------------
+    // Create Product Apis
+    app.post("/api/products", verifyToken, verifyAdmin, async (req, res) => {
+      const productInfo = req.body;
+      const result = await productsCollection.insertOne(productInfo);
+      res.send(result);
+    });
+
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
