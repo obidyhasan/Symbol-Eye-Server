@@ -116,6 +116,20 @@ async function run() {
       }
     );
 
+    // Product Delete api
+    app.delete(
+      "/api/products/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+        const result = await productsCollection.deleteOne(query);
+        res.send(result);
+      }
+    );
+
+    // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
