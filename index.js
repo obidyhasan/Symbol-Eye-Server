@@ -210,6 +210,12 @@ async function run() {
       res.send(result);
     });
 
+    // GET FAQ api
+    app.get("/api/faq", async (req, res) => {
+      const result = await faqCollection.find().toArray();
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
