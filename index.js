@@ -175,6 +175,14 @@ async function run() {
       }
     );
 
+    // ------------ Gallery APIS ------------
+    // POST gallery api
+    app.post("/api/gallery", verifyToken, verifyAdmin, async (req, res) => {
+      const galleryInfo = req.body;
+      const result = await galleryCollection.insertOne(galleryInfo);
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
