@@ -73,6 +73,12 @@ async function run() {
       res.send(result);
     });
 
+    // Get Category Api
+    app.get("/api/category", verifyToken, verifyAdmin, async (req, res) => {
+      const result = await categoriesCollection.find().toArray();
+      res.send(result);
+    });
+
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
