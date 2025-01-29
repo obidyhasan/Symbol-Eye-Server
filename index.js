@@ -66,6 +66,12 @@ async function run() {
     });
 
     // --------- REST APIS ----------
+    // Category Create API
+    app.post("/api/category", verifyToken, verifyAdmin, async (req, res) => {
+      const category = req?.body;
+      const result = await categoriesCollection.insertOne(category);
+      res.send(result);
+    });
 
     await client.connect();
     await client.db("admin").command({ ping: 1 });
