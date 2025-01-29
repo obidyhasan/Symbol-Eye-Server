@@ -137,6 +137,14 @@ async function run() {
       }
     );
 
+    // ------------ Servicers APIs -------------
+    // Create Services Api
+    app.post("/api/services", verifyToken, verifyAdmin, async (req, res) => {
+      const serviceInfo = req.body;
+      const result = await servicesCollection.insertOne(serviceInfo);
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
