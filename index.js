@@ -100,6 +100,12 @@ async function run() {
       res.send(result);
     });
 
+    // Get Product Apis
+    app.get("/api/products", async (req, res) => {
+      const result = await productsCollection.find().toArray();
+      res.send(result);
+    });
+
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
