@@ -4,7 +4,7 @@ const app = express();
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // Middleware
 app.use(cors());
@@ -78,6 +78,19 @@ async function run() {
       const result = await categoriesCollection.find().toArray();
       res.send(result);
     });
+
+    // Category delete api
+    app.delete(
+      "/api/category/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const { id } = req?.params;
+        const query = { _id: new ObjectId(id) };
+        const result = categoriesCollection.deleteOne(query);
+        res.send(result);
+      }
+    );
 
     await client.connect();
     await client.db("admin").command({ ping: 1 });
