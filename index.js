@@ -189,6 +189,19 @@ async function run() {
       res.send(result);
     });
 
+    // DELETE gallery api
+    app.delete(
+      "/api/gallery/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+        const result = await galleryCollection.deleteOne(query);
+        res.send(result);
+      }
+    );
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
