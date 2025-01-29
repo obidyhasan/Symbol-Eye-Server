@@ -202,6 +202,14 @@ async function run() {
       }
     );
 
+    // -------------- FAQ APIs ---------------
+    // POST FAQ api
+    app.post("/api/faq", verifyToken, verifyAdmin, async (req, res) => {
+      const faqInfo = req.body;
+      const result = await faqCollection.insertOne(faqInfo);
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
