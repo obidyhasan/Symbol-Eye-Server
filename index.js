@@ -106,6 +106,16 @@ async function run() {
       res.send(result);
     });
 
+    // Update Product APIs
+    app.patch(
+      "/api/products/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const product = req.body;
+      }
+    );
+
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
