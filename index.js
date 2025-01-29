@@ -106,6 +106,14 @@ async function run() {
       res.send(result);
     });
 
+    // Get Single Product api
+    app.get("/api/products/:id", async (req, res) => {
+      const { id } = req.body;
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollection.findOne(query);
+      res.send(result);
+    });
+
     // Update Product APIs
     app.patch(
       "/api/products/:id",
