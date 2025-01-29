@@ -151,6 +151,17 @@ async function run() {
       res.send(result);
     });
 
+    // Update Services api
+    app.patch(
+      "/api/services/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+      }
+    );
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
