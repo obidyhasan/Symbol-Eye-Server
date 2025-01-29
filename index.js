@@ -162,6 +162,19 @@ async function run() {
       }
     );
 
+    // Delete Services api
+    app.delete(
+      "/api/services/:id",
+      verifyToken,
+      verifyAdmin,
+      async (req, res) => {
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+        const result = await servicesCollection.deleteOne(query);
+        res.send(result);
+      }
+    );
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
