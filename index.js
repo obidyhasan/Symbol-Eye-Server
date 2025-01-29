@@ -216,6 +216,13 @@ async function run() {
       res.send(result);
     });
 
+    app.delete("/api/faq/:id", verifyToken, verifyAdmin, async (req, res) => {
+      const { id } = req.params;
+      const query = { _id: new ObjectId(id) };
+      const result = await faqCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
