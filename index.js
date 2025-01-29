@@ -145,6 +145,12 @@ async function run() {
       res.send(result);
     });
 
+    // Get Services Api
+    app.get("/api/services", async (req, res) => {
+      const result = await servicesCollection.find().toArray();
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
