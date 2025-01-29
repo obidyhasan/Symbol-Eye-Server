@@ -183,6 +183,12 @@ async function run() {
       res.send(result);
     });
 
+    // Get gallery api
+    app.get("/api/gallery", async (req, res) => {
+      const result = await galleryCollection.find().toArray();
+      res.send(result);
+    });
+
     // MongoDB Connect
     await client.connect();
     await client.db("admin").command({ ping: 1 });
