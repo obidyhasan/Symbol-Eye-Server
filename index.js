@@ -74,7 +74,7 @@ async function run() {
     });
 
     // Get Category Api
-    app.get("/api/category", verifyToken, verifyAdmin, async (req, res) => {
+    app.get("/api/category", async (req, res) => {
       const result = await categoriesCollection.find().toArray();
       res.send(result);
     });
@@ -87,7 +87,7 @@ async function run() {
       async (req, res) => {
         const { id } = req?.params;
         const query = { _id: new ObjectId(id) };
-        const result = categoriesCollection.deleteOne(query);
+        const result = await categoriesCollection.deleteOne(query);
         res.send(result);
       }
     );
@@ -221,6 +221,15 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await faqCollection.deleteOne(query);
       res.send(result);
+    });
+
+    // get statistic
+    app.get("/api/statistic", verifyToken, verifyAdmin, async (req, res) => {
+      const totalProduct = await productsCollection.estimatedDocumentCount();
+      const totalCategory = await categoriesCollection.estimatedDocumentCount();
+      const totalServices = await servicesCollection.estimatedDocumentCount();
+      const totalFAQ = await faqCollection.estimatedDocumentCount();
+      res.send({ totalProduct, totalCategory, totalServices, totalFAQ });
     });
 
     // MongoDB Connect
