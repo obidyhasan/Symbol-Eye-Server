@@ -113,6 +113,13 @@ async function run() {
       const result = await productsCollection.findOne(query);
       res.send(result);
     });
+    // Get Featured Product api
+    app.get("/api/featured/products", async (req, res) => {
+      const result = await productsCollection
+        .find({ isFeatured: "Featured" })
+        .toArray();
+      res.send(result);
+    });
 
     // Update Product APIs
     app.patch(
