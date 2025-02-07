@@ -121,6 +121,20 @@ async function run() {
       verifyAdmin,
       async (req, res) => {
         const product = req.body;
+        const { id } = req.params;
+        const query = { _id: new ObjectId(id) };
+        const updateDoc = {
+          $set: {
+            name: product?.name,
+            price: product?.price,
+            category: product?.category,
+            isFeatured: product?.isFeatured,
+            description: product?.description,
+            image: product?.image,
+          },
+        };
+        const result = await productsCollection.updateOne(query, updateDoc);
+        res.send(result);
       }
     );
 
